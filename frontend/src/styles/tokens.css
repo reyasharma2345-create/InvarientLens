@@ -1,0 +1,49 @@
+/*
+ * InvariantLens design tokens — "Sakura Mist" light palette, sampled from the
+ * user's ink-wash reference (misty paper sky, slate rock, sakura, pink moon).
+ * Refine here; never hard-code colors in components.
+ */
+:root {
+  /* Surfaces: warm paper → lavender mist → blue-grey cloud */
+  --il-paper: #fbfafb;
+  --il-mist-50: #f5f3f7;
+  --il-mist-100: #eceaf1;
+  --il-mist-200: #dcd9e4; /* lavender cloud */
+  --il-mist-300: #bdbacb;
+  --il-slate: #8a8fa4; /* blue-grey mist on the cliffs */
+  --il-rock: #2c303d; /* ink-wash rock */
+  --il-rock-deep: #1b1e28;
+  --il-moon: #f4cfdb; /* the pale pink moon */
+
+  /* Signal colors: bloom = primary, gold = moss accent, brick = failure */
+  --il-bloom: #d2447f; /* deep sakura — passes AA on paper */
+  --il-blush: #f3a9c8; /* blossom */
+  --il-lavender: #8f88b0;
+  --il-water: #5f7ea6; /* waterfall blue */
+  --il-gold: #a2843a; /* moss on the rocks */
+  --il-brick: #c4413f;
+  --il-sage: #3f7a63; /* healthy / invariant holds — passes AA on paper */
+
+  /* Text: ink on paper */
+  --il-text: #1e2130;
+  --il-text-2: #4b5065;
+  --il-text-3: #6e7389;
+
+  /* Glass: frosted paper */
+  --il-glass-bg: rgba(255, 255, 255, 0.55);
+  --il-glass-bg-strong: rgba(255, 255, 255, 0.8);
+  --il-glass-border: rgba(44, 48, 61, 0.1);
+  --il-glass-border-hi: rgba(210, 68, 127, 0.35);
+  --il-glass-blur: 16px;
+
+  /* Shape & motion */
+  --il-radius-sm: 10px;
+  --il-radius-md: 16px;
+  --il-radius-lg: 24px;
+  --il-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Typography */
+  --il-font-display: 'Space Grotesk', system-ui, sans-serif;
+  --il-font-body: 'Inter', system-ui, sans-serif;
+  --il-font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}

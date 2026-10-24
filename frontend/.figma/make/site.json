@@ -1,0 +1,10 @@
+{
+  "description": "Helps developers investigate distributed-system failures by reconstructing service workflows, surfacing invariant violations, and exploring evidence-based repairs.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}

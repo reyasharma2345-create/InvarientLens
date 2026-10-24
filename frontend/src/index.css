@@ -1,0 +1,191 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import 'tailwindcss';
+@import './styles/tokens.css';
+
+@theme {
+  --color-paper: #fbfafb;
+  --color-mist: #eceaf1;
+  --color-rock: #2c303d;
+  --color-moon: #f4cfdb;
+  --color-bloom: #d2447f;
+  --color-blush: #f3a9c8;
+  --color-lavender: #8f88b0;
+  --color-water: #5f7ea6;
+  --color-gold: #a2843a;
+  --color-brick: #c4413f;
+  --color-sage: #3f7a63;
+  --color-ink: #1e2130;
+  --color-ink-2: #4b5065;
+  --color-ink-3: #6e7389;
+  --font-display: 'Space Grotesk', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+@layer base {
+  html {
+    background: var(--il-paper);
+    color-scheme: light;
+  }
+  body {
+    font-family: var(--il-font-body);
+    color: var(--il-text);
+    background: var(--il-paper);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: hidden;
+  }
+  :focus-visible {
+    outline: 2px solid var(--il-bloom);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  ::selection {
+    background: rgba(210, 68, 127, 0.2);
+  }
+}
+
+@layer components {
+  .il-label {
+    font-family: var(--il-font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--il-text-3);
+  }
+  .il-glass {
+    background: linear-gradient(155deg, var(--il-glass-bg-strong), var(--il-glass-bg));
+    border: 1px solid var(--il-glass-border);
+    backdrop-filter: blur(var(--il-glass-blur)) saturate(140%);
+    -webkit-backdrop-filter: blur(var(--il-glass-blur)) saturate(140%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      0 24px 60px -30px rgba(44, 48, 61, 0.3);
+  }
+  .il-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    height: 3rem;
+    padding: 0 1.4rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 0.9375rem;
+    transition: transform 0.3s var(--il-ease-out), box-shadow 0.3s var(--il-ease-out), background 0.3s;
+  }
+  .il-btn-primary {
+    background: linear-gradient(135deg, #e8679f, var(--il-bloom));
+    color: #fff;
+    box-shadow: 0 10px 30px -10px rgba(210, 68, 127, 0.55);
+  }
+  .il-btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 36px -10px rgba(210, 68, 127, 0.7);
+  }
+  .il-btn-outline {
+    border: 1px solid rgba(44, 48, 61, 0.16);
+    color: var(--il-text);
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+  .il-btn-outline:hover {
+    background: #fff;
+    transform: translateY(-2px);
+  }
+  .il-btn-sm {
+    height: 2.5rem;
+    padding: 0 1rem;
+    font-size: 0.875rem;
+    gap: 0.45rem;
+  }
+  .il-btn:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+    transform: none;
+  }
+  .il-btn-ghost {
+    color: var(--il-text-2);
+  }
+  .il-btn-ghost:hover {
+    color: var(--il-text);
+    background: rgba(44, 48, 61, 0.05);
+  }
+  /* Static frosted surface for dense app UI (no tilt). */
+  .il-panel {
+    background: linear-gradient(160deg, var(--il-glass-bg-strong), var(--il-glass-bg));
+    border: 1px solid var(--il-glass-border);
+    border-radius: var(--il-radius-lg);
+    backdrop-filter: blur(var(--il-glass-blur)) saturate(140%);
+    -webkit-backdrop-filter: blur(var(--il-glass-blur)) saturate(140%);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.9),
+      0 18px 44px -28px rgba(44, 48, 61, 0.28);
+  }
+  .il-input {
+    width: 100%;
+    height: 2.875rem;
+    padding: 0 0.95rem;
+    border-radius: var(--il-radius-sm);
+    border: 1px solid rgba(44, 48, 61, 0.14);
+    background: rgba(255, 255, 255, 0.75);
+    color: var(--il-text);
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+  }
+  textarea.il-input {
+    height: auto;
+    min-height: 6rem;
+    padding: 0.75rem 0.95rem;
+    font-family: var(--il-font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+  .il-input::placeholder {
+    color: var(--il-text-3);
+  }
+  .il-input:hover {
+    border-color: rgba(44, 48, 61, 0.24);
+  }
+  .il-input:focus-visible {
+    outline: none;
+    background: #fff;
+    border-color: var(--il-bloom);
+    box-shadow: 0 0 0 3px rgba(210, 68, 127, 0.16);
+  }
+  .il-input[aria-invalid='true'] {
+    border-color: var(--il-brick);
+  }
+  .il-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    height: 1.5rem;
+    padding: 0 0.6rem;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    font-family: var(--il-font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+}
+
+/* Atmosphere drift — CSS only, cheap */
+@keyframes il-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(2%, -3%, 0) scale(1.06); }
+}
+@keyframes il-orbit {
+  to { transform: rotate(360deg); }
+}
+@keyframes il-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
