@@ -1,10 +1,12 @@
 import { Link } from 'react-router'
 import { motion } from 'framer-motion'
+import { useState } from 'react'
 import {
   ArrowRight,
   CircleAlert,
   CircleCheck,
   CircleDashed,
+  Cpu,
 } from 'lucide-react'
 import {
   INVARIANTS,
@@ -19,6 +21,7 @@ import { StatusChip } from '@/components/ui/StatusChip'
 import { SERVICE_STYLE } from '@/components/investigation/serviceStyle'
 import { useDemo } from '@/lib/demoStore'
 import { isBroken, isResolved } from '@/lib/derive'
+import { useLiveBackend } from '@/lib/liveBackend'
 
 const rise = (d: number) => ({
   initial: { opacity: 0, y: 18 },
@@ -44,6 +47,8 @@ export function OverviewPage() {
   const broken = active.filter((i) => isBroken(i, resolved))
   const peak = Math.max(...VIOLATIONS_24H)
   const total = VIOLATIONS_24H.reduce((a, b) => a + b, 0)
+  const [activeBug, setActiveBug] = useState('C1_A')
+  const { events, violations, diagnoses, loading } = useLiveBackend(42, activeBug)
 
   return (
     <>
@@ -62,6 +67,34 @@ export function OverviewPage() {
       />
 
       <motion.div {...rise(0)}>
+        <div className="mb-6 flex items-center justify-between rounded-[var(--il-radius-lg)] border border-indigo-500/25 bg-gradient-to-r from-indigo-500/10 via-purple-500/5 to-white/40 p-4 sm:p-5">
+          <div className="flex items-center gap-3">
+            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-indigo-600 text-white">
+              <Cpu size={20} aria-hidden />
+            </span>
+            <div>
+              <p className="font-display text-sm font-semibold text-ink">
+                Live Backend Engine (FastAPI + Nemotron)
+              </p>
+              <p className="text-xs text-ink-2">
+                {loading ? 'Connecting to backend...' : `Connected · ${events.length} events traced · ${violations.length} violations detected`}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <select
+              value={activeBug}
+              onChange={(e) => setActiveBug(e.target.value)}
+              className="rounded-md border border-rock/20 bg-white/80 px-3 py-1.5 text-xs font-medium text-ink shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              <option value="C1_A">C1_A: Missing Compensation</option>
+              <option value="C1_B">C1_B: Orders Crash</option>
+              <option value="C2_A">C2_A: Last-Item Race</option>
+              <option value="C3_A">C3_A: Idempotency Double-Charge</option>
+            </select>
+          </div>
+        </div>
+
         {liveOpen ? (
           <Link
             to={`/app/investigations/${live.id}`}
