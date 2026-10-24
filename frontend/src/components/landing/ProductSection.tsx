@@ -14,21 +14,24 @@ import { SectionHeading } from "./SectionHeading"
 const FEATURES = [
   {
     icon: GitBranch,
-    title: "Workflow reconstruction",
-    body: "Stitch events from Orders, Payments and Inventory into one causal timeline.",
-    accent: "bloom" as const,
+    title: 'Workflow reconstruction',
+    body: 'Stitch events from Orders, Payments and Inventory into one causal timeline.',
+    accent: 'bloom' as const,
+    visual: 'causal-timeline',
   },
   {
     icon: ShieldAlert,
-    title: "Invariant violations",
-    body: "“Every captured payment has reserved stock” — find where the rule silently broke.",
-    accent: "brick" as const,
+    title: 'Invariant violations',
+    body: '“Every captured payment has reserved stock” — find where the rule silently broke.',
+    accent: 'brick' as const,
+    visual: 'violation-pulse',
   },
   {
     icon: Activity,
-    title: "Verified repairs",
-    body: "Replay candidate fixes against the trace and prove the invariant holds again.",
-    accent: "gold" as const,
+    title: 'Verified repairs',
+    body: 'Replay candidate fixes against the trace and prove the invariant holds again.',
+    accent: 'gold' as const,
+    visual: 'verified-check',
   },
 ]
 
@@ -125,6 +128,83 @@ export function ProductSection() {
               </div>
               <h3 className="font-display text-xl font-semibold">{f.title}</h3>
               <p className="mt-3 leading-relaxed text-ink-2">{f.body}</p>
+              
+              {/* Animated visual inside card */}
+              <div className="mt-6 rounded-lg border border-rock/10 bg-black/5 p-4">
+                {f.visual === 'causal-timeline' && (
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <motion.span 
+                        animate={{ x: [0, 12, 0] }}
+                        transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+                        className="h-2 w-2 rounded-full bg-bloom"
+                      />
+                      <span className="font-mono text-xs text-ink">orders.created</span>
+                    </div>
+                    <div className="flex items-center gap-2 pl-3 border-l border-bloom/30">
+                      <motion.span 
+                        animate={{ scale: [1, 1.3, 1] }}
+                        transition={{ repeat: Infinity, duration: 1.5, ease: 'easeInOut' }}
+                        className="h-2 w-2 rounded-full bg-gold"
+                      />
+                      <span className="font-mono text-xs text-ink">payments.captured</span>
+                    </div>
+                    <div className="flex items-center gap-2 pl-6 border-l border-gold/30">
+                      <motion.span 
+                        animate={{ opacity: [0.4, 1, 0.4] }}
+                        transition={{ repeat: Infinity, duration: 1.8, ease: 'easeInOut' }}
+                        className="h-2 w-2 rounded-full bg-sage"
+                      />
+                      <span className="font-mono text-xs text-ink">inventory.reserved</span>
+                    </div>
+                  </div>
+                )}
+
+                {f.visual === 'violation-pulse' && (
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <span className="text-ink">INV-001 (Response)</span>
+                      <motion.span
+                        animate={{ opacity: [1, 0.3, 1], scale: [1, 1.05, 1] }}
+                        transition={{ repeat: Infinity, duration: 1.2, ease: 'easeInOut' }}
+                        className="rounded bg-brick/15 px-2 py-0.5 text-brick font-bold"
+                      >
+                        FAILED
+                      </motion.span>
+                    </div>
+                    <div className="h-1.5 w-full bg-rock/10 rounded-full overflow-hidden">
+                      <motion.div 
+                        animate={{ x: ['-100%', '0%'] }}
+                        transition={{ repeat: Infinity, duration: 1.2, ease: 'linear' }}
+                        className="h-full w-full bg-brick"
+                      />
+                    </div>
+                    <p className="text-[11px] text-ink-3 font-mono">Divergence detected at Orders service</p>
+                  </div>
+                )}
+
+                {f.visual === 'verified-check' && (
+                  <div className="space-y-2">
+                    <div className="flex items-center justify-between text-xs font-mono">
+                      <span className="text-ink">Repro & Patch Sweep</span>
+                      <motion.span
+                        animate={{ rotate: [0, 360] }}
+                        transition={{ repeat: Infinity, duration: 4, ease: 'linear' }}
+                        className="text-gold"
+                      >
+                        ⚙
+                      </motion.span>
+                    </div>
+                    <motion.div 
+                      animate={{ backgroundColor: ['rgba(74, 222, 128, 0.1)', 'rgba(74, 222, 128, 0.3)', 'rgba(74, 222, 128, 0.1)'] }}
+                      transition={{ repeat: Infinity, duration: 2, ease: 'easeInOut' }}
+                      className="rounded border border-sage/30 p-2 text-center text-xs font-mono text-sage font-medium"
+                    >
+                      ✓ 1,000 Seeds Verified (0 Violations)
+                    </motion.div>
+                  </div>
+                )}
+              </div>
             </div>
           </GlassCard>
         ))}
