@@ -26,7 +26,7 @@ class NemotronDiagnosisEngine:
     """
     api_key: str = os.environ.get("NVIDIA_API_KEY", os.environ.get("NEBIUS_API_KEY", "not-set"))
     base_url: str = os.environ.get("NVIDIA_BASE_URL", "https://integrate.api.nvidia.com/v1")
-    model_name: str = "nvidia/nemotron-3-ultra-550b-a55b"
+    model_name: str = "nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B"
     
     def __post_init__(self):
         try:
