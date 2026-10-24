@@ -9,6 +9,10 @@ import os
 import json
 from dataclasses import dataclass
 from typing import Any
+from dotenv import load_dotenv
+
+load_dotenv()
+
 # from openai import OpenAI
 from simulator.event_schema import Event
 from invariants import Violation
@@ -18,14 +22,24 @@ from detection import DivergencePoint, DiagnosisResult
 @dataclass
 class NemotronDiagnosisEngine:
     """
-    AI Diagnosis Engine powered by NVIDIA Nemotron (via OpenAI-compatible API or mock).
+    AI Diagnosis Engine powered by NVIDIA Nemotron (via OpenAI-compatible Nebius/NVIDIA endpoint).
     """
-    api_key: str = os.environ.get("NVIDIA_API_KEY", "not-set")
+    api_key: str = os.environ.get("NVIDIA_API_KEY", os.environ.get("NEBIUS_API_KEY", "not-set"))
     base_url: str = os.environ.get("NVIDIA_BASE_URL", "https://integrate.api.nvidia.com/v1")
     model_name: str = "nvidia/nemotron-3-ultra-550b-a55b"
     
     def __post_init__(self):
-        self.client = None
+        try:
+            from openai import OpenAI
+            if self.api_key != "not-set":
+                self.client = OpenAI(
+                    api_key=self.api_key,
+                    base_url=self.base_url,
+                )
+            else:
+                self.client = None
+        except Exception:
+            self.client = None
     
     def diagnose(self, diagnosis_result: DiagnosisResult, trace_events: list[Event]) -> dict[str, Any]:
         """
