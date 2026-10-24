@@ -6,6 +6,7 @@ export function RealBackendTester() {
   const [loading, setLoading] = useState(false)
   const [result, setResult] = useState<any>(null)
   const [diagnosis, setDiagnosis] = useState<any>(null)
+  const [minimized, setMinimized] = useState(false)
 
   const runSimulate = async () => {
     setLoading(true)
@@ -52,17 +53,42 @@ export function RealBackendTester() {
     }
   }
 
+  if (minimized) {
+    return (
+      <div className="flex items-center justify-between rounded-xl border border-white/10 bg-neutral-900/80 px-4 py-2.5 text-white backdrop-blur-md shadow-lg">
+        <div className="flex items-center gap-2">
+          <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span className="text-xs font-medium text-gray-300">InvariantLens Real Backend Bridge</span>
+        </div>
+        <button 
+          onClick={() => setMinimized(false)}
+          className="text-xs text-indigo-400 hover:text-indigo-300 font-medium px-2 py-1 rounded bg-indigo-950/50 border border-indigo-800/50 transition"
+        >
+          Open Bridge
+        </button>
+      </div>
+    )
+  }
+
   return (
-    <div className="rounded-xl border border-white/10 bg-black/40 p-6 text-white backdrop-blur-md">
-      <h2 className="text-xl font-bold mb-4">InvariantLens Real Backend Bridge</h2>
-      <div className="flex gap-4 mb-4 items-center">
+    <div className="rounded-xl border border-white/10 bg-black/40 p-6 text-white backdrop-blur-md shadow-xl relative">
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-bold">InvariantLens Real Backend Bridge</h2>
+        <button 
+          onClick={() => setMinimized(true)}
+          className="text-xs text-gray-400 hover:text-white px-2.5 py-1 rounded bg-neutral-800/80 border border-neutral-700/50 transition"
+        >
+          Minimize
+        </button>
+      </div>
+      <div className="flex gap-4 mb-4 items-center flex-wrap">
         <div>
           <label className="block text-xs text-gray-400 mb-1">Seed</label>
           <input 
             type="number" 
             value={seed} 
             onChange={(e) => setSeed(Number(e.target.value))}
-            className="bg-neutral-800 border border-neutral-700 px-3 py-1.5 rounded text-sm w-28"
+            className="bg-neutral-800 border border-neutral-700 px-3 py-1.5 rounded text-sm w-28 text-white"
           />
         </div>
         <div>
@@ -70,7 +96,7 @@ export function RealBackendTester() {
           <select 
             value={activeBug} 
             onChange={(e) => setActiveBug(e.target.value)}
-            className="bg-neutral-800 border border-neutral-700 px-3 py-1.5 rounded text-sm"
+            className="bg-neutral-800 border border-neutral-700 px-3 py-1.5 rounded text-sm text-white"
           >
             <option value="C1_A">C1_A: Missing Compensation</option>
             <option value="C1_B">C1_B: Orders Crash</option>
@@ -82,14 +108,14 @@ export function RealBackendTester() {
           <button 
             onClick={runSimulate}
             disabled={loading}
-            className="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-1.5 rounded text-sm font-medium transition"
+            className="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-1.5 rounded text-sm font-medium transition disabled:opacity-50"
           >
             {loading ? 'Running...' : 'Run Simulation'}
           </button>
           <button 
             onClick={runDiagnose}
             disabled={loading}
-            className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-1.5 rounded text-sm font-medium transition"
+            className="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-1.5 rounded text-sm font-medium transition disabled:opacity-50"
           >
             {loading ? 'Running...' : 'Nemotron Diagnose'}
           </button>
@@ -112,3 +138,4 @@ export function RealBackendTester() {
     </div>
   )
 }
+

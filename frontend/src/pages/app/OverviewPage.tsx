@@ -19,7 +19,6 @@ import { StatusChip } from '@/components/ui/StatusChip'
 import { SERVICE_STYLE } from '@/components/investigation/serviceStyle'
 import { useDemo } from '@/lib/demoStore'
 import { isBroken, isResolved } from '@/lib/derive'
-import { RealBackendTester } from '@/components/app/RealBackendTester'
 
 const rise = (d: number) => ({
   initial: { opacity: 0, y: 18 },
@@ -63,10 +62,6 @@ export function OverviewPage() {
       />
 
       <motion.div {...rise(0)}>
-        <div className="mb-6">
-          <RealBackendTester />
-        </div>
-
         {liveOpen ? (
           <Link
             to={`/app/investigations/${live.id}`}
